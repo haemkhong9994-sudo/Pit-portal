@@ -1,0 +1,67 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/MYNAVI_logo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  /* Adjusted for background use */
+  opacity: 0.4;
+  /* Prominent watermark visibility */
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Ensure content stands out */
+main {
+  background-color: transparent !important;
+}
+
+.bg-slate-50 {
+  background-color: transparent !important;
+}
+
+/* Floating Dots Animation */
+.floating-dot {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.15;
+  filter: blur(1px);
+  animation: floating-dots linear infinite;
+}
+
+@keyframes floating-dots {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.2);
+    opacity: 0.25;
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.8);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+}

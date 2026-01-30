@@ -411,7 +411,7 @@ const DependentTab: React.FC<DependentTabProps> = ({ dependents, setDependents, 
           <table className="w-full text-left border-collapse">
             <thead className="bg-slate-100 border-b border-slate-200">
               <tr>
-                <th className="px-3 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider min-w-[200px]">Họ và tên</th>
+                <th className="px-3 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider min-w-[200px] text-center">Họ và tên</th>
                 <th className="px-3 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Quan hệ</th>
                 <th className="px-3 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Mã số thuế</th>
                 <th className="px-3 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Thời điểm được giảm trừ</th>
@@ -428,7 +428,7 @@ const DependentTab: React.FC<DependentTabProps> = ({ dependents, setDependents, 
               {localDependents.map((dep) => (
                 <tr key={dep.id} className="hover:bg-slate-50/80 transition-colors group">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center gap-3">
                       {dep.relationship === 'Con' ? (
                         <img
                           src="/assets/images/baby.png"

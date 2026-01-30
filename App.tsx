@@ -54,9 +54,22 @@ import { getDependents } from './api';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(() => {
+    const savedUser = localStorage.getItem('pit_user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [dependents, setDependents] = useState<Dependent[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
+
+  const handleLogin = (u: UserProfile) => {
+    localStorage.setItem('pit_user', JSON.stringify(u));
+    setUser(u);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('pit_user');
+    setUser(null);
+  };
 
   React.useEffect(() => {
     if (user?.email) {
@@ -80,7 +93,7 @@ const App: React.FC = () => {
   }, [user]);
 
   if (!user) {
-    return <Login onLoginSuccess={setUser} />;
+    return <Login onLoginSuccess={handleLogin} />;
   }
 
   const renderContent = () => {
@@ -102,9 +115,9 @@ const App: React.FC = () => {
   const isAdmin = user.role === 'Admin';
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row animate-in fade-in duration-700">
+    <div className="h-screen flex flex-col md:flex-row overflow-hidden animate-in fade-in duration-700">
       {/* Sidebar Navigation */}
-      <nav className="w-full md:w-64 bg-[#00AAEB] text-white flex-shrink-0 flex flex-col shadow-xl z-20">
+      <nav className="w-full md:w-64 bg-[#00AAEB] text-white flex-shrink-0 flex flex-col shadow-xl z-20 h-auto md:h-full">
         <div className="p-6">
           <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
             <span className="bg-white p-1.5 rounded-lg text-[#00AAEB]">PIT</span>
@@ -177,7 +190,6 @@ const App: React.FC = () => {
 
         <div className="p-6 text-[10px] font-bold text-white/40 border-t border-white/10 flex justify-between items-center bg-black/5">
           <span>V1.0.0 © 2026 Mynavi</span>
-          <button onClick={() => setUser(null)} className="text-white hover:text-white/80 transition-colors font-black">Đăng xuất</button>
         </div>
       </nav>
 
@@ -190,18 +202,27 @@ const App: React.FC = () => {
             {activeTab === 'dependents' && "Danh sách Người phụ thuộc"}
             {activeTab === 'overall' && "Bảng điều khiển Quản trị"}
           </h2>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-sm font-bold text-slate-900 leading-none">{user.fullName}</p>
-              <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">{user.role}</p>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-sm font-bold text-slate-900 leading-none">{user.fullName}</p>
+                <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">{user.role}</p>
+              </div>
+              <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold shadow-lg shadow-indigo-200 overflow-hidden">
+                {user.avatarUrl ? (
+                  <img src={user.avatarUrl} alt={user.fullName} className="w-full h-full object-cover" />
+                ) : (
+                  user.fullName.charAt(0)
+                )}
+              </div>
             </div>
-            <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold shadow-lg shadow-indigo-200 overflow-hidden">
-              {user.avatarUrl ? (
-                <img src={user.avatarUrl} alt={user.fullName} className="w-full h-full object-cover" />
-              ) : (
-                user.fullName.charAt(0)
-              )}
-            </div>
+            <button
+              onClick={handleLogout}
+              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+              title="Đăng xuất"
+            >
+              <ICONS.LogOut />
+            </button>
           </div>
         </header>
 

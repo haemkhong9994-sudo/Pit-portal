@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { UserProfile } from '../../types';
 import { ICONS } from '../../constants';
 
@@ -10,6 +10,13 @@ interface HomeTabProps {
 }
 
 const HomeTab: React.FC<HomeTabProps> = ({ user, dependentCount, unconfirmedCount }) => {
+  const [showCCCD, setShowCCCD] = useState(false);
+
+  const formatCCCD = (cccd: string | undefined) => {
+    if (!cccd) return "---";
+    if (showCCCD) return cccd;
+    return `•••• •••• ${cccd.slice(-4)}`;
+  };
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Hero Stats */}
@@ -55,9 +62,18 @@ const HomeTab: React.FC<HomeTabProps> = ({ user, dependentCount, unconfirmedCoun
               e.currentTarget.parentElement?.appendChild(svg);
             }}
           />
-          <div>
-            <p className="text-sm text-slate-500 font-medium">Số CCCD</p>
-            <p className="text-xl font-bold text-slate-900">{user.cccd || "---"}</p>
+          <div className="flex-1 flex items-center justify-between">
+            <div>
+              <p className="text-sm text-slate-500 font-medium">Số CCCD</p>
+              <p className="text-xl font-bold text-slate-900 font-mono">{formatCCCD(user.cccd)}</p>
+            </div>
+            <button
+              onClick={() => setShowCCCD(!showCCCD)}
+              className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
+              title={showCCCD ? "Ẩn số CCCD" : "Xem số CCCD"}
+            >
+              {showCCCD ? <ICONS.EyeOff /> : <ICONS.Eye />}
+            </button>
           </div>
         </div>
 

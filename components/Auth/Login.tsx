@@ -74,7 +74,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
             <div className="w-full max-w-md p-8 relative z-10 animate-in fade-in zoom-in-95 duration-700">
                 <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-2xl shadow-black/10 mb-6 rotate-3 hover:rotate-6 transition-transform overflow-hidden">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-3xl shadow-2xl shadow-black/10 mb-6 transition-transform overflow-hidden">
                         <img
                             src="/assets/images/Mynavi_logo_doc.png"
                             alt="Mynavi Logo"
